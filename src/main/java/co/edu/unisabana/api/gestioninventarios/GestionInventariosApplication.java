@@ -7,9 +7,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EnableJpaRepositories(basePackages = {"co.edu.unisabana.prueba.gestioninventarios.repositorio"})
-@ComponentScan(basePackages = {"co.edu.unisabana.prueba.gestioninventarios"})
-@EntityScan(basePackages = {"co.edu.unisabana.prueba.gestioninventarios.modelo"})
+@EnableJpaRepositories(basePackages = {"co.edu.unisabana.api.gestioninventarios.repositorio"})
+@ComponentScan(basePackages = {"co.edu.unisabana.api.gestioninventarios"})
+@EntityScan(basePackages = {"co.edu.unisabana.api.gestioninventarios.modelo"})
 public class GestionInventariosApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(GestionInventariosApplication.class, args);
