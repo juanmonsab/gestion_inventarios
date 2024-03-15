@@ -1,10 +1,10 @@
 package co.edu.unisabana.api.gestioninventarios.dto;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 public class ProductoDTO {
     private Long id;
     private String nombre;
