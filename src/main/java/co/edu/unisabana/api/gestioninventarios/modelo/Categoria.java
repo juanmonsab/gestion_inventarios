@@ -1,5 +1,6 @@
 package co.edu.unisabana.api.gestioninventarios.modelo;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,8 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @Entity
 public class Categoria {
     @Id

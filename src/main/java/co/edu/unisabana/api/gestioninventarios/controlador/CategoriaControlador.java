@@ -30,4 +30,3 @@ public class CategoriaControlador {
         CategoriaDTO nuevaCategoria = servicioCategoria.agregarCategoria(categoriaDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevaCategoria);
     }
-}

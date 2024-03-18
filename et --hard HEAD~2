@@ -1,0 +1,83 @@
+[33mcommit 984121ef10566e84ef578fe218cdc9e944958372[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: Juan Montes Sabogal <montessabogaljuan@icloud.com>
+Date:   Wed Mar 13 23:26:28 2024 -0500
+
+    Agrega el controlador REST para Categoria
+
+[33mcommit 54db1a739874aa114563376d2549b754a14b6f5a[m
+Author: Juan Montes Sabogal <montessabogaljuan@icloud.com>
+Date:   Wed Mar 13 23:24:24 2024 -0500
+
+    Agrega eÃl controlador REST para Producto
+
+[33mcommit d077d0f4fdb6759297a9b722c05fc274defd91c2[m[33m ([m[1;31morigin/feature/definicionmodelos[m[33m, [m[1;32mfeature/definicionmodelos[m[33m)[m
+Author: Juan Montes Sabogal <montessabogaljuan@icloud.com>
+Date:   Wed Mar 13 23:22:10 2024 -0500
+
+    Crea el DTO con los atributos para la transferencia de datos de Categoria
+
+[33mcommit 41b4f13976646a4f9b480a603cda345ad96c3f46[m
+Author: Juan Montes Sabogal <montessabogaljuan@icloud.com>
+Date:   Wed Mar 13 23:21:15 2024 -0500
+
+    Crea el DTO con los atributos para la transferencia de datos de Produto
+
+[33mcommit 0488e0e63e8994d795614d6f7c846c540598e32e[m
+Author: Juan Montes Sabogal <montessabogaljuan@icloud.com>
+Date:   Wed Mar 13 23:19:11 2024 -0500
+
+    Crea los atributos y relaciones de la entidad Categoria
+
+[33mcommit 2181a2b5b6b833e6cb14fc4075ff888084e4516c[m
+Author: Juan Montes Sabogal <montessabogaljuan@icloud.com>
+Date:   Wed Mar 13 23:18:24 2024 -0500
+
+    Crea los atributos y relaciones de la entidad Producto
+
+[33mcommit 7defacc9580ff510638ac82a41317081a90e97b6[m[33m ([m[1;31morigin/feature/repositoriosJPA[m[33m, [m[1;32mfeature/repositoriosJPA[m[33m)[m
+Author: Juan Montes Sabogal <montessabogaljuan@icloud.com>
+Date:   Wed Mar 13 23:15:40 2024 -0500
+
+    Configura el repositorio JPA de Categoria
+
+[33mcommit 2436f61802c15163cb33c00435b61aabac837318[m
+Author: Juan Montes Sabogal <montessabogaljuan@icloud.com>
+Date:   Wed Mar 13 23:14:41 2024 -0500
+
+    Configura el repositorio JPA de Producto
+
+[33mcommit a5d9d8f5030fd9c8e8e2300bbba472502102be6d[m[33m ([m[1;31morigin/feature/implementacionservicios[m[33m, [m[1;32mfeature/implementacionservicios[m[33m)[m
+Author: Juan Montes Sabogal <montessabogaljuan@icloud.com>
+Date:   Wed Mar 13 23:11:25 2024 -0500
+
+    Agrega el ServicioCategoria junto con sus metodos e implementacion
+
+[33mcommit e58a38786914c40d8f80f69dc5683b9bccccaca0[m
+Author: Juan Montes Sabogal <montessabogaljuan@icloud.com>
+Date:   Wed Mar 13 23:09:10 2024 -0500
+
+    Agrega el ServicioProducto junto con sus metodos e implementacion
+
+[33mcommit 8904d04ac4e6918563f39dc63234ed69ccb24b55[m[33m ([m[1;31morigin/feature/configuracioninicia[m[33m, [m[1;32mfeature/configuracioninicia[m[33m)[m
+Author: Juan Montes Sabogal <montessabogaljuan@icloud.com>
+Date:   Wed Mar 13 23:00:45 2024 -0500
+
+    Configura y hace las importaciones necesarias en el archivo GestionInventariosApplication
+
+[33mcommit 29da862469b65d7faf486000fe837772033f9315[m
+Author: Juan Montes Sabogal <montessabogaljuan@icloud.com>
+Date:   Wed Mar 13 22:56:38 2024 -0500
+
+    Configura el archivo application.properties agregando propiedades asi como la conexion jdbc
+
+[33mcommit 916f5cffab70ba3c2d4a72c4256bfeee33a04dcb[m
+Author: Juan Montes Sabogal <montessabogaljuan@icloud.com>
+Date:   Wed Mar 13 22:51:57 2024 -0500
+
+    Agrega dependencias y configura el archivo build.gradle
+
+[33mcommit 39813ec342fba398846930cd8ca945c5751bf9db[m
+Author: Juan Montes Sabogal <montessabogaljuan@icloud.com>
+Date:   Wed Mar 13 22:46:52 2024 -0500
+
+    Commit inicial
