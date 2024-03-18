@@ -1,8 +1,6 @@
 package co.edu.unisabana.api.gestioninventarios.modelo;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import jakarta.persistence.*;
 

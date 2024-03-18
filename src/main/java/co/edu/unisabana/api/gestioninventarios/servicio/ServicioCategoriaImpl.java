@@ -3,7 +3,6 @@ package co.edu.unisabana.api.gestioninventarios.servicio;
 import co.edu.unisabana.api.gestioninventarios.dto.CategoriaDTO;
 import co.edu.unisabana.api.gestioninventarios.modelo.Categoria;
 import co.edu.unisabana.api.gestioninventarios.repositorio.CategoriaRepositorio;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,7 +31,6 @@ public class ServicioCategoriaImpl implements ServicioCategoria {
         categoria.setNombre(categoriaDTO.getNombre());
         categoriaRepositorio.save(categoria);
 
-        // Puedes ajustar esta parte según tus necesidades
         return convertirACategoriaDTO(categoria);
     }
 
