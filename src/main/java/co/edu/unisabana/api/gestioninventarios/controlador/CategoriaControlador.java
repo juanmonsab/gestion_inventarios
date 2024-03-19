@@ -20,12 +20,12 @@ public class CategoriaControlador {
         this.servicioCategoria = servicioCategoria;
     }
 
-    @GetMapping
+    @GetMapping("/obtener")
     public List<CategoriaDTO> obtenerCategorias() {
         return servicioCategoria.obtenerTodasLasCategorias();
     }
 
-    @PostMapping
+    @PostMapping("/agregar")
     public ResponseEntity<CategoriaDTO> agregarCategoria(@RequestBody CategoriaDTO categoriaDTO) {
         CategoriaDTO nuevaCategoria = servicioCategoria.agregarCategoria(categoriaDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevaCategoria);
