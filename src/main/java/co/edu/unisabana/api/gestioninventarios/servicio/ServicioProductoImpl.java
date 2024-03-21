@@ -65,7 +65,7 @@ public class ServicioProductoImpl implements ServicioProducto {
         return producto.getCantidad();
     }
 
-    private ProductoDTO convertirAProductoDTO(Producto producto) {
+    public ProductoDTO convertirAProductoDTO(Producto producto) {
         ProductoDTO productoDTO = new ProductoDTO();
         BeanUtils.copyProperties(producto, productoDTO, "categoria");
         if (producto.getCategoria() != null) {
@@ -74,7 +74,7 @@ public class ServicioProductoImpl implements ServicioProducto {
         return productoDTO;
     }
 
-    private Producto convertirAProducto(ProductoDTO productoDTO) {
+    public Producto convertirAProducto(ProductoDTO productoDTO) {
         Producto producto = new Producto();
         BeanUtils.copyProperties(productoDTO, producto, "categoria");
         if (productoDTO.getCategoria() != null && productoDTO.getCategoria().getId() != null) {
@@ -84,7 +84,7 @@ public class ServicioProductoImpl implements ServicioProducto {
         return producto;
     }
 
-    private CategoriaDTO convertirACategoriaDTO(Categoria categoria) {
+    public CategoriaDTO convertirACategoriaDTO(Categoria categoria) {
         CategoriaDTO categoriaDTO = new CategoriaDTO();
         categoriaDTO.setId(categoria.getId());
         categoriaDTO.setNombre(categoria.getNombre());
