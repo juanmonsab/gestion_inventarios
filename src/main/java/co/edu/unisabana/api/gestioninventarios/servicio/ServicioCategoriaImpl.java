@@ -34,7 +34,7 @@ public class ServicioCategoriaImpl implements ServicioCategoria {
         return convertirACategoriaDTO(categoria);
     }
 
-    private CategoriaDTO convertirACategoriaDTO(Categoria categoria) {
+    public CategoriaDTO convertirACategoriaDTO(Categoria categoria) {
         CategoriaDTO categoriaDTO = new CategoriaDTO();
         categoriaDTO.setId(categoria.getId());
         categoriaDTO.setNombre(categoria.getNombre());
