@@ -46,8 +46,7 @@ public class ServicioProductoImpl implements ServicioProducto {
 
     @Override
     public ProductoDTO obtenerProductoPorId(Long id) {
-        Producto producto = productoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Producto no encontrado con id: " + id));
+        Producto producto = productoRepository.findById(id).orElseThrow(() -> new RuntimeException("Producto no encontrado con id: " + id));
         return convertirAProductoDTO(producto);
     }
 
