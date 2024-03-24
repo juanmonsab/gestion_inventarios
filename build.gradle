@@ -2,19 +2,12 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.2.3'
 	id 'io.spring.dependency-management' version '1.1.4'
+	id 'info.solidsoft.pitest' version '1.15.0'
 }
 
 group = 'co.edu.unisabana.api'
 version = '0.0.1-SNAPSHOT'
 
-java {
-	toolchain {
-		languageVersion.set(JavaLanguageVersion.of(21))
-	}
-}
-
-sourceCompatibility = '21'
-targetCompatibility = '21'
 
 configurations {
 	compileOnly {
@@ -33,6 +26,9 @@ repositories {
 	maven {
 		url 'https://maven.mariadb.org/repository/mariadb-java-client/'
 	}
+	maven {
+		url 'https://plugins.gradle.org/m2/'
+	}
 }
 
 dependencies {
@@ -45,9 +41,21 @@ dependencies {
 	implementation 'jakarta.persistence:jakarta.persistence-api:3.1.0'
 	implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '3.3.2'
 	runtimeOnly 'com.h2database:h2'
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 
 }
 
-tasks.named('test') {
+test {
 	useJUnitPlatform()
+}
+
+pitest {
+	targetClasses = ['co.edu.unisabana.api.gestioninventarios.*']
+	targetTests = ['co.edu.unisabana.api.gestioninventarios.*']
+	pitestVersion = '1.15.0'
+	junit5PluginVersion = '1.2.1'
+	threads = 4
+	outputFormats = ['XML', 'HTML']
+	timestampedReports = false
 }
