@@ -11,71 +11,95 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
+import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)
 class ServicioProductoImpTest {
 
+    @Mock
+    ProductoRepositorio repositorio;
     @InjectMocks
     ServicioProductoImpl servicio;
 
-    @Mock
-    ProductoRepositorio repositorio;
-
     @Test
     void DadoProductoDTO_CuandoAgregarProducto_EntoncesRetornaProductoAgregado() {
-
         ProductoDTO productoDTO = new ProductoDTO();
         productoDTO.setNombre("Prueba");
         productoDTO.setPrecio(10000);
         productoDTO.setCantidad(10);
+        Producto productoGuardado = new Producto();
+        productoGuardado.setId(1L); // Simulamos que se genera un ID
+        productoGuardado.setNombre(productoDTO.getNombre());
+        productoGuardado.setPrecio(productoDTO.getPrecio());
+        productoGuardado.setCantidad(productoDTO.getCantidad());
+        when(repositorio.save(any(Producto.class))).thenReturn(productoGuardado);
         ProductoDTO productoAgregado = servicio.agregarProducto(productoDTO);
         assertNotNull(productoAgregado);
-        assertNotNull(productoAgregado.getId());
-        assertEquals(productoDTO.getNombre(),productoAgregado.getNombre());
-        assertEquals(productoDTO.getCantidad(),productoAgregado.getCantidad());
+        assertNotNull(productoAgregado.getId(), "El ID no debe ser nulo");
+        assertEquals(productoDTO.getNombre(), productoAgregado.getNombre(), "Los nombres deben coincidir");
+        assertEquals(productoDTO.getCantidad(), productoAgregado.getCantidad(), "Las cantidades deben coincidir");
+        verify(repositorio).save(any(Producto.class));
     }
     @Test
     void DadoProductoDTOAndId_CuandoActualizarProducto_EntoncesRetornaProductoActualizado() {
-
         Long idProducto = 1L;
         ProductoDTO productoDTO = new ProductoDTO();
         productoDTO.setNombre("Producto Actualizado");
         productoDTO.setPrecio(150000);
         productoDTO.setCantidad(20);
-        ProductoDTO productoActualizado = servicio.actualizarProducto(idProducto,productoDTO);
+        Producto productoExistente = new Producto();
+        productoExistente.setId(idProducto);
+        when(repositorio.findById(idProducto)).thenReturn(Optional.of(productoExistente));
+        when(repositorio.save(any(Producto.class))).thenReturn(productoExistente);
+        ProductoDTO productoActualizado = servicio.actualizarProducto(idProducto, productoDTO);
         assertNotNull(productoActualizado);
-        assertEquals(idProducto,productoActualizado.getId());
-        assertEquals(productoDTO.getNombre(),productoActualizado.getNombre());
-        assertEquals(productoDTO.getCantidad(),productoActualizado.getCantidad());
+        assertEquals(idProducto, productoActualizado.getId());
+        assertEquals(productoDTO.getNombre(), productoActualizado.getNombre());
+        assertEquals(productoDTO.getCantidad(), productoActualizado.getCantidad());
+        verify(repositorio).save(any(Producto.class));
     }
     @Test
     void DadoId_CuandoEliminarProducto_EntoncesProductoEliminadoNull() {
-
         Long idProducto = 1L;
+        when(repositorio.findById(idProducto)).thenReturn(Optional.empty());
         servicio.eliminarProducto(idProducto);
-        assertNull(servicio.obtenerProductoPorId(idProducto));
+        verify(repositorio).deleteById(idProducto);
+        assertThrows(RuntimeException.class, () -> servicio.obtenerProductoPorId(idProducto));
     }
     @Test
-    void DadoId_CuandoObtenerProductoPorId_EntoncesProductoObetnido () {
-
+    void DadoId_CuandoObtenerProductoPorId_EntoncesProductoObtenido() {
         Long idProducto = 1L;
-        ProductoDTO productoObtenido = servicio.obtenerProductoPorId(idProducto);
-        assertNotNull(productoObtenido);
-        assertEquals(idProducto,productoObtenido.getId());
+        Producto producto = new Producto();
+        producto.setId(idProducto);
+        when(repositorio.findById(idProducto)).thenReturn(Optional.of(producto));
+        ProductoDTO resultado = servicio.obtenerProductoPorId(idProducto);
+        assertNotNull(resultado);
+        assertEquals(idProducto, resultado.getId());
     }
     @Test
     void DadoCategoriaId_CuandoObtenerProductosPorCategoria_EntoncesProductosObtenidos () {
-
         Long idCategoria = 1L;
-        List<ProductoDTO> productos = servicio.obtenerProductosPorCategoria(idCategoria);
+        List<Producto> productosEntity = new ArrayList<>();
+        Producto producto = new Producto();
+        producto.setId(1L);
+        producto.setCategoria(new Categoria());
+        producto.getCategoria().setId(idCategoria);
+        productosEntity.add(producto);
+        when(repositorio.findByCategoria_Id(anyLong())).thenReturn(productosEntity);
+        List<ProductoDTO> productos;
+        productos = servicio.obtenerProductosPorCategoria(idCategoria);
         assertNotNull(productos);
         assertFalse(productos.isEmpty());
-        assertEquals(idCategoria,productos.get(0).getCategoria().getId());
+        assertEquals(idCategoria, productos.get(0).getCategoria().getId());
     }
     @Test
     void DadoId_CuandoConcultarStockDisponible_EntoncesStock () {
