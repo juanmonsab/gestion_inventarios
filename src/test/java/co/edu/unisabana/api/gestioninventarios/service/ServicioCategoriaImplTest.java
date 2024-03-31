@@ -6,6 +6,9 @@ import co.edu.unisabana.api.gestioninventarios.repositorio.CategoriaRepositorio;
 import co.edu.unisabana.api.gestioninventarios.servicio.ServicioCategoriaImpl;
 import static org.mockito.Mockito.doReturn;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -42,15 +45,20 @@ public class ServicioCategoriaImplTest {
     }
 
     @Test
-    void DadoCategoriaDTO_CuandoAgregarCategoria_EntoncesRetornaCategoriaDTO() {
+    void DadoCategoriaDTO_CuandoAgregarCategoria_EntoncesRetornaCategoriaDTOConId() {
 
         CategoriaDTO categoriaDTO = new CategoriaDTO();
-        categoriaDTO.setId(1L);
         categoriaDTO.setNombre("Aseo");
+        Categoria categoriaGuardada = new Categoria();
+        categoriaGuardada.setNombre(categoriaDTO.getNombre());
+        categoriaGuardada.setId(1L);
+        when(repositorio.save(any(Categoria.class))).thenReturn(categoriaGuardada);
         CategoriaDTO resultado = servicio.agregarCategoria(categoriaDTO);
-        assertEquals(categoriaDTO.getId(), resultado.getId());
+        verify(repositorio).save(any(Categoria.class));
+        assertNotNull(resultado.getId());
         assertEquals(categoriaDTO.getNombre(), resultado.getNombre());
     }
+
 
     @Test
     void DadoCategoria_CaundoConvertirCategoriaDTO_EntoncesRetornaCategoriaDTO() {

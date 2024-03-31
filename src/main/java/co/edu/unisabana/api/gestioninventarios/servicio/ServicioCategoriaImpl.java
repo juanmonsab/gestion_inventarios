@@ -30,7 +30,6 @@ public class ServicioCategoriaImpl implements ServicioCategoria {
         Categoria categoria = new Categoria();
         categoria.setNombre(categoriaDTO.getNombre());
         categoriaRepositorio.save(categoria);
-
         return convertirACategoriaDTO(categoria);
     }
 
