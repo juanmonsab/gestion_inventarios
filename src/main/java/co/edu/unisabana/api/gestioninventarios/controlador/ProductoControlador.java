@@ -16,7 +16,7 @@ public class ProductoControlador {
         this.servicioProducto = servicioProducto;
     }
 
-    @PostMapping
+    @PostMapping("/agregar")
     public ProductoDTO agregarProducto(@RequestBody ProductoDTO productoDTO) {
         return servicioProducto.agregarProducto(productoDTO);
     }

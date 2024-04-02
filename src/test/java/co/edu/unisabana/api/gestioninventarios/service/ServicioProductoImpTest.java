@@ -37,16 +37,16 @@ class ServicioProductoImpTest {
         productoDTO.setPrecio(10000);
         productoDTO.setCantidad(10);
         Producto productoGuardado = new Producto();
-        productoGuardado.setId(1L); // Simulamos que se genera un ID
+        productoGuardado.setId(1L);
         productoGuardado.setNombre(productoDTO.getNombre());
         productoGuardado.setPrecio(productoDTO.getPrecio());
         productoGuardado.setCantidad(productoDTO.getCantidad());
         when(repositorio.save(any(Producto.class))).thenReturn(productoGuardado);
         ProductoDTO productoAgregado = servicio.agregarProducto(productoDTO);
         assertNotNull(productoAgregado);
-        assertNotNull(productoAgregado.getId(), "El ID no debe ser nulo");
-        assertEquals(productoDTO.getNombre(), productoAgregado.getNombre(), "Los nombres deben coincidir");
-        assertEquals(productoDTO.getCantidad(), productoAgregado.getCantidad(), "Las cantidades deben coincidir");
+        assertNotNull(productoAgregado.getId());
+        assertEquals(productoDTO.getNombre(), productoAgregado.getNombre());
+        assertEquals(productoDTO.getCantidad(), productoAgregado.getCantidad());
         verify(repositorio).save(any(Producto.class));
     }
     @Test
