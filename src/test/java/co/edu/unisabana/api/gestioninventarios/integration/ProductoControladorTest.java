@@ -14,10 +14,11 @@ public class ProductoControladorTest extends AbstractTest{
 
     @Test
     void testAgregarProducto() {
+        String actualizapath = path + "/agregar";
         ProductoDTO productoDTO = new ProductoDTO();
         productoDTO.setNombre("Prueba");
         productoDTO.setPrecio(4000);
-        ResponseEntity<ProductoDTO> response = restTemplate.postForEntity(path,productoDTO,ProductoDTO.class);
+        ResponseEntity<ProductoDTO> response = restTemplate.postForEntity(actualizapath,productoDTO,ProductoDTO.class);
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         ProductoDTO productoCreado = response.getBody();
         assertNotNull(productoCreado);
@@ -44,8 +45,9 @@ public class ProductoControladorTest extends AbstractTest{
     }
     @Test
     void testEliminarProducto() {
+        String agregapath = path + "/agregar";
         String deletepath = path + "/{id}";
-        ResponseEntity<ProductoDTO> response = restTemplate.postForEntity(path,new ProductoDTO(), ProductoDTO.class);
+        ResponseEntity<ProductoDTO> response = restTemplate.postForEntity(agregapath,new ProductoDTO(), ProductoDTO.class);
         ProductoDTO prodcutoCreado = response.getBody();
         Long productoId = prodcutoCreado.getId();
         assertNotNull(productoId);
@@ -77,10 +79,11 @@ public class ProductoControladorTest extends AbstractTest{
     }
     @Test
     void testConsultarStockDisponible(){
+        String postpath = path + "/agregar";
         ProductoDTO productoDTO = new ProductoDTO();
         productoDTO.setNombre("Coca-cola");
         productoDTO.setPrecio(4000);
-        ResponseEntity<ProductoDTO> response = restTemplate.postForEntity(path,productoDTO, ProductoDTO.class);
+        ResponseEntity<ProductoDTO> response = restTemplate.postForEntity(postpath,productoDTO, ProductoDTO.class);
         assertEquals(HttpStatus.CREATED,response.getStatusCode());
         ProductoDTO productoCreado = response.getBody();
         assertNotNull(productoCreado);
