@@ -6,9 +6,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Descarga el Proyecto
+      - name: Descargando el Proyecto
         uses: actions/checkout@v4
-      - name: Instala Java
+      - name: Instalacion de Java
         uses: actions/set-upjava@v4
         with:
           distribution: 'temurin'
