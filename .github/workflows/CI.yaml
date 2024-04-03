@@ -15,5 +15,7 @@ jobs:
           java-version: '21'
       - name: Configurando Gradle
         uses: gradle/gradle-build-action@v2
+      - name: Garantiza execute permission para el gradlew
+        run: chmod +x ./gradlew
       - name: Compila el Proyecto build Proyect
         run: ./gradlew build
