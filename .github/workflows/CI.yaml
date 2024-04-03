@@ -9,7 +9,7 @@ jobs:
       - name: Descarga el Proyecto
         uses: actions/checkout@v4
       - name: Instala Java
-        uses: actions/set-up-java@v4
+        uses: actions/set-upjava@v4
         with:
           distribution: 'temurin'
           java-version: '21'
