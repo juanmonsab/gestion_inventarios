@@ -1,0 +1,21 @@
+name: Continuos Integration
+on:
+  pull_request:
+    branches: ['master']
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargando el Proyecto
+        uses: actions/checkout@v4
+      - name: Instalacion de Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+      - name: Configurando Gradle
+        uses: gradle/gradle-build-action@v2
+      - name: Garantiza execute permission para el gradlew
+        run: chmod +x ./gradlew
+      - name: Compila el Proyecto build Proyect
+        run: ./gradlew build
