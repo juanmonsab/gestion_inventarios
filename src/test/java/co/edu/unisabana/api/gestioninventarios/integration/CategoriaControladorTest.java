@@ -6,13 +6,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+import javax.sql.DataSource;
+import java.sql.Connection;
+
+import static org.assertj.core.api.Fail.fail;
 
 
 public class CategoriaControladorTest extends AbstractTest {
     String path = "/categorias";
 
     @Autowired
-    TestRestTemplate restTemplate;
+    private DataSource dataSource;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
 
 }
+
+
+
