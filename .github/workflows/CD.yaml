@@ -35,10 +35,12 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Extrae la metadata
         id: meta
-        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        uses: docker/metadata-action@v2
         with:
           images: estebanbeco27/gestion_inventarios
-          tags: type=semver,pattern={{version}}
+          tags: |
+            type=semver,pattern={{version}}
+            type=raw,value=${{ steps.increment_version.outputs.new_tag }}
       - name: Construye y sube la imagen de docker
         uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
         with:
