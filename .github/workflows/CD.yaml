@@ -30,7 +30,6 @@ jobs:
         id: next_tag
         run: |
             
-            TAG_PREFIX="v" # Cambia esto si usas un prefijo diferente para tus tags
             GIT_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
             echo "Latest tag: $GIT_TAG"
             
