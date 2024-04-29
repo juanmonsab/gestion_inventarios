@@ -2,14 +2,14 @@ name: Continuos Delivery
 on:
   push:
     branches: ['master']
+    tags:
+      - "*.*.*"
 jobs:
   cd:
     runs-on: ubuntu-latest
     steps:
       - name: Descargando el Proyecto
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - name: Instalacion de Java
         uses: actions/setup-java@v4
         with:
@@ -21,34 +21,25 @@ jobs:
         run: chmod +x ./gradlew
       - name: Compila el Proyecto build Proyect
         run: ./gradlew build
-      - name: Incrementar el tag de versión
-        id: increment_version
-        uses: anothrNick/github-tag-action@1.26.0
+      - name: Docker metadata
+        uses: docker/metadata-action@v5
         with:
-          default_bump: patch
-          tag_prefix: ""
-          release_branches: master
+          images: estebanbeco27/gestion_inventarios
+          tags: |
+            type=schedule
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=sha
       - name: Log In al DockerHub
-        uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Generate Docker metadata
-        id: meta
-        uses: docker/metadata-action@v3
-        with:
-          images: |
-            docker.io/estebanbeco27/gestion_inventarios
-            ghcr.io/estebanbeco27/gestion_inventarios
-            quay.io/estebanbeco27/gestion_inventarios
-          tags: |
-            type=ref,event=branch
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-          flavor: |
-            latest=${{ github.ref == 'refs/heads/master' }}
       - name: Construye y sube la imagen de docker
-        uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
+        uses: docker/build-push-action@v5
         with:
           images: estebanbeco27/gestion_inventarios
           context: .
