@@ -8,6 +8,8 @@ jobs:
     steps:
       - name: Descargando el Proyecto
         uses: actions/checkout@v4
+        with:
+          fetch-depth: '0'
       - name: Instalacion de Java
         uses: actions/setup-java@v4
         with:
@@ -24,14 +26,28 @@ jobs:
         with:
          username: ${{ secrets.DOCKER_USERNAME }}
          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Calculate Next Semantic Version Tag
+        id: next_tag
+        run: |
+            
+            TAG_PREFIX="v" # Cambia esto si usas un prefijo diferente para tus tags
+            GIT_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
+            echo "Latest tag: $GIT_TAG"
+            
+           
+            NEXT_TAG=$(echo $GIT_TAG | awk -F. -v OFS=. '{$(NF-1)++; $(NF)=0; print}')
+            echo "Next tag: $NEXT_TAG"
+            
+            
+            echo "next_version=$NEXT_TAG" >> $GITHUB_ENV
+            echo "::set-output name=next_version::$NEXT_TAG"
       - name: Docker metadata
         id: meta
         uses: docker/metadata-action@v3
         with:
           images: estebanbeco27/gestion_inventarios
           tags: |
-            type=ref,event=branch
-            type=semver,pattern={{version}}
+            type=raw,value=${{ steps.next_tag.outputs.next_version }}
 
       - name: Construye y sube la imagen de docker
         uses: docker/build-push-action@v2
