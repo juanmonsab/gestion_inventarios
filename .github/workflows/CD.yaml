@@ -8,6 +8,8 @@ jobs:
     steps:
       - name: Descargando el Proyecto
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Instalacion de Java
         uses: actions/setup-java@v4
         with:
@@ -19,6 +21,13 @@ jobs:
         run: chmod +x ./gradlew
       - name: Compila el Proyecto build Proyect
         run: ./gradlew build
+      - name: Incrementar el tag de versión
+        id: increment_version
+        uses: anothrNick/github-tag-action@1.26.0
+        with:
+          default_bump: patch
+          tag_prefix: ""
+          release_branches: master
       - name: Log In al DockerHub
         uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
         with:
@@ -29,6 +38,7 @@ jobs:
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
           images: estebanbeco27/gestion_inventarios
+          tags: type=semver,pattern={{version}}
       - name: Construye y sube la imagen de docker
         uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
         with:
