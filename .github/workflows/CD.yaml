@@ -26,16 +26,15 @@ jobs:
          password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Docker metadata
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v3
         with:
-            images: estebanbeco27/gestion_inventarios
-            tags: |
-              type=ref,event=branch
-              type=semver,pattern={{version}}
-              type=sha-${{ github.sha }}
+          images: estebanbeco27/gestion_inventarios
+          tags: |
+            type=ref,event=branch
+            type=semver,pattern={{version}}
 
       - name: Construye y sube la imagen de docker
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v2
         with:
           context: .
           file: Dockerfile
