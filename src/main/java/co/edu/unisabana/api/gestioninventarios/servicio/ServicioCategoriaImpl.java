@@ -33,6 +33,11 @@ public class ServicioCategoriaImpl implements ServicioCategoria {
         return convertirACategoriaDTO(categoriaGuardada);
     }
 
+    @Override
+    public void eliminarCategoria(Long id) {
+        categoriaRepositorio.deleteById(id);
+    }
+
     public CategoriaDTO convertirACategoriaDTO(Categoria categoria) {
         CategoriaDTO categoriaDTO = new CategoriaDTO();
         categoriaDTO.setId(categoria.getId());
@@ -40,3 +45,4 @@ public class ServicioCategoriaImpl implements ServicioCategoria {
         return categoriaDTO;
     }
 }
+
