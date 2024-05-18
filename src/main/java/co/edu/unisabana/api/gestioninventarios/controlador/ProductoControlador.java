@@ -41,6 +41,11 @@ public class ProductoControlador {
         return servicioProducto.obtenerProductosPorCategoria(categoriaId);
     }
 
+    @GetMapping("/obtener") // Endpoint para obtener todos los productos
+    public List<ProductoDTO> obtenerTodosLosProductos() {
+        return servicioProducto.obtenerTodosLosProductos();
+    }
+
     @GetMapping("/{id}/stock")
     public int consultarStockDisponible(@PathVariable Long id) {
         return servicioProducto.consultarStockDisponible(id);

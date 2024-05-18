@@ -17,4 +17,6 @@ public interface ServicioProducto {
     List<ProductoDTO> obtenerProductosPorCategoria(Long categoriaId);
 
     int consultarStockDisponible(Long id);
+
+    List<ProductoDTO> obtenerTodosLosProductos();
 }

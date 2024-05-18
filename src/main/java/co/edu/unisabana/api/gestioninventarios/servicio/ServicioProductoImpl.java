@@ -64,6 +64,14 @@ public class ServicioProductoImpl implements ServicioProducto {
         return producto.getCantidad();
     }
 
+    @Override
+    public List<ProductoDTO> obtenerTodosLosProductos() {
+        List<Producto> productos = productoRepository.findAll();
+        return productos.stream()
+                .map(this::convertirAProductoDTO)
+                .collect(Collectors.toList());
+    }
+
     public ProductoDTO convertirAProductoDTO(Producto producto) {
         ProductoDTO productoDTO = new ProductoDTO();
         BeanUtils.copyProperties(producto, productoDTO, "categoria");

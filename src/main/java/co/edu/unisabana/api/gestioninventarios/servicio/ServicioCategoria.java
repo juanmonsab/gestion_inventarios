@@ -9,4 +9,6 @@ public interface ServicioCategoria {
     List<CategoriaDTO> obtenerTodasLasCategorias();
 
     CategoriaDTO agregarCategoria(CategoriaDTO categoriaDTO);
+
+    void eliminarCategoria(Long id);
 }
