@@ -25,7 +25,7 @@ public class CategoriaControladorTest {
 
         Assertions.assertNotNull(responseAgregar.getBody());
         Assertions.assertEquals(HttpStatus.CREATED, responseAgregar.getStatusCode());
-        Assertions.assertEquals("Nueva Categoría", responseAgregar.getBody().getNombre());
+        Assertions.assertEquals("CategoriaTest", responseAgregar.getBody().getNombre());
     }
 
     @Test
