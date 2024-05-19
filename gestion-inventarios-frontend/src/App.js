@@ -4,12 +4,12 @@ import Categorias from './components/Categorias';
 import Productos from './components/Productos';
 import Inicio from './components/Inicio';
 import NotFound from './components/NotFound';
-import './App.css';  // Importa el archivo CSS
+import './App.css';
 
 const App = () => {
   return (
     <Router>
-      <div>
+      <div className="app">
         <nav>
           <ul>
             <li>
@@ -24,15 +24,18 @@ const App = () => {
           </ul>
         </nav>
 
-        <Routes>
-          <Route path="/" element={<Inicio />} />
-          <Route path="/categorias" element={<Categorias />} />
-          <Route path="/productos" element={<Productos />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <div className="content">
+          <Routes>
+            <Route path="/" element={<Inicio />} />
+            <Route path="/categorias" element={<Categorias />} />
+            <Route path="/productos" element={<Productos />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
       </div>
     </Router>
   );
 };
 
 export default App;
+

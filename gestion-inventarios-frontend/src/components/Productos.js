@@ -13,6 +13,8 @@ const Productos = () => {
   const [mensaje, setMensaje] = useState('');
   const [categorias, setCategorias] = useState([]);
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
+  const [producto, setProducto] = useState(null);
+  const [idProducto, setIdProducto] = useState('');
 
   useEffect(() => {
     const obtenerProductos = async () => {
@@ -108,6 +110,16 @@ const Productos = () => {
     }
   };
 
+const handleConsultarProducto = async () => {
+  try {
+    const productoObtenido = await ProductoService.obtenerProductoPorId(idProducto);
+    setProducto(productoObtenido);
+    setIdProducto('');
+  } catch (error) {
+    console.error('Error al consultar el producto:', error);
+  }
+};
+
   return (
     <div>
       <h1>Productos</h1>
@@ -132,16 +144,40 @@ const Productos = () => {
           <button type="submit">Agregar</button>
         </form>
       )}
+    <div>
+      <input
+        type="text"
+        value={idProducto}
+        onChange={(e) => setIdProducto(e.target.value)}
+        placeholder="Ingrese ID del producto"
+      />
+      <button onClick={handleConsultarProducto}>
+        Consultar Producto
+      </button>
+        {producto && (
+          <div>
+            <h2>Producto</h2>
+            <p>ID: {producto.id}</p>
+            <p>Nombre: {producto.nombre}</p>
+            <p>Descripción: {producto.descripcion}</p>
+            <p>Precio: {producto.precio}</p>
+            <p>Cantidad disponible: {producto.cantidad}</p>
+            <p>Categoría: {producto.categoria.nombre}</p>
+          </div>
+        )}
+    </div>
       <ul>
         {productos.length > 0 ? (
           productos.map((producto) => (
             <li key={producto.id}>
-              {producto.nombre} - {producto.descripcion} - Precio: {producto.precio} - Cantidad: {producto.cantidad}
-              <div className="actions">
-                <button className="btn-blue" onClick={() => handleConsultarStock(producto.id)}>Consultar Stock</button>
-                <button className="btn-blue" onClick={() => handleActualizarProducto(producto.id)}>Actualizar</button>
-                <button onClick={() => handleEliminarProducto(producto.id)}>Eliminar</button>
-              </div>
+              <strong>ID:</strong> {producto.id}<br />
+              <strong>Nombre:</strong> {producto.nombre}<br />
+              <strong>Descripción:</strong> {producto.descripcion}<br />
+              <strong>Precio:</strong> {producto.precio}<br />
+              <strong>Cantidad disponible:</strong> {producto.cantidad}<br />
+              <button className="btn-oscuro" onClick={() => handleActualizarProducto(producto.id)}>Actualizar</button>
+              <button className="btn-oscuro" onClick={() => handleConsultarStock(producto.id)}>Consultar Stock</button>
+              <button className="btn-eliminar" onClick={() => handleEliminarProducto(producto.id)}>Eliminar</button>
             </li>
           ))
         ) : (
@@ -170,7 +206,4 @@ const Productos = () => {
 };
 
 export default Productos;
-
-
-
 
