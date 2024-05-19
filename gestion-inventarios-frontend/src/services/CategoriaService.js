@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseUrl = 'http://localhost:8080'; // Cambia el puerto y la URL base según tu configuración del backend
+const baseUrl = 'http://localhost:8080';
 
 const CategoriaService = {
   obtenerCategorias: async () => {

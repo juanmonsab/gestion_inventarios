@@ -1,7 +1,7 @@
 package co.edu.unisabana.api.gestioninventarios.modelo;
 
 import lombok.Data;
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,7 +18,7 @@ public class Categoria {
 
     private String nombre;
 
-    @OneToMany(mappedBy = "categoria")
+    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
     private List<Producto> productos;
 
     public Categoria() {

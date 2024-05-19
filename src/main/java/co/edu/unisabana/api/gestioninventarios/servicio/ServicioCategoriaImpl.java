@@ -35,7 +35,14 @@ public class ServicioCategoriaImpl implements ServicioCategoria {
 
     @Override
     public void eliminarCategoria(Long id) {
-        categoriaRepositorio.deleteById(id);
+        if (!categoriaRepositorio.existsById(id)) {
+            throw new RuntimeException("Categoría no encontrada con id: " + id);
+        }
+        try {
+            categoriaRepositorio.deleteById(id);
+        } catch (Exception e) {
+            throw new RuntimeException("Error al eliminar la categoría. Asegúrese de que no haya productos asociados.", e);
+        }
     }
 
     public CategoriaDTO convertirACategoriaDTO(Categoria categoria) {
@@ -45,4 +52,5 @@ public class ServicioCategoriaImpl implements ServicioCategoria {
         return categoriaDTO;
     }
 }
+
 

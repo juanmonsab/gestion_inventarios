@@ -31,7 +31,12 @@ public class CategoriaControlador {
 
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<String> eliminarCategoria(@PathVariable Long id) {
-        servicioCategoria.eliminarCategoria(id);
-        return ResponseEntity.ok("Categoría eliminada correctamente");
+        try {
+            servicioCategoria.eliminarCategoria(id);
+            return ResponseEntity.ok("Categoría eliminada correctamente");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 }
+

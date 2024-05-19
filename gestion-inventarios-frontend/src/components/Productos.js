@@ -12,7 +12,7 @@ const Productos = () => {
   const [productoId, setProductoId] = useState(null);
   const [mensaje, setMensaje] = useState('');
   const [categorias, setCategorias] = useState([]);
-  const [mostrarFormulario, setMostrarFormulario] = useState(false); // Nuevo estado para mostrar/ocultar formulario
+  const [mostrarFormulario, setMostrarFormulario] = useState(false);
 
   useEffect(() => {
     const obtenerProductos = async () => {
@@ -56,7 +56,7 @@ const Productos = () => {
         setDescripcion(producto.descripcion);
         setPrecio(producto.precio);
         setCantidad(producto.cantidad);
-        setCategoriaId(producto.categoria.id.toString()); // Convertir ID a cadena para el campo select
+        setCategoriaId(producto.categoria.id.toString());
       }
     } catch (error) {
       console.error('Error al obtener producto para actualizar:', error);
