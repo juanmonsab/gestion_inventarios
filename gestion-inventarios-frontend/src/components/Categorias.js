@@ -17,7 +17,7 @@ const Categorias = () => {
         setCategorias(data);
         setCategoriasConId(data.map(cat => ({ ...cat, nombre: `${cat.id}: ${cat.nombre}` })));
       } catch (error) {
-        console.error('Error al obtener categorías:', error);
+        console.error('Error al obtener las categorías:', error);
       }
     };
 
@@ -30,9 +30,12 @@ const Categorias = () => {
       setCategorias(categorias.filter((categoria) => categoria.id !== id));
       setCategoriasConId(categoriasConId.filter((categoria) => categoria.id !== id));
       setMensaje('Categoría eliminada correctamente');
+      setTimeout(() => {
+        setMensaje('');
+      }, 3000);
     } catch (error) {
-      console.error('Error al eliminar categoría:', error);
-      setMensaje('Error al eliminar categoría');
+      console.error('Error al eliminar la categoría:', error);
+      setMensaje('Error al eliminar la categoría');
     }
   };
 
@@ -49,8 +52,8 @@ const Categorias = () => {
       setCategorias(data);
       setCategoriasConId(data.map(cat => ({ ...cat, nombre: `${cat.id}: ${cat.nombre}` })));
     } catch (error) {
-      console.error('Error al agregar categoría:', error);
-      setMensaje('Error al agregar categoría');
+      console.error('Error al agregar la categoría:', error);
+      setMensaje('Error al agregar la categoría');
     }
   };
 
@@ -70,7 +73,7 @@ const Categorias = () => {
   return (
     <div>
       <h1>Categorías</h1>
-      {mensaje && <div style={{ color: 'green' }}>{mensaje}</div>}
+      {mensaje && <div className="mensaje">{mensaje}</div>}
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -95,7 +98,7 @@ const Categorias = () => {
       <form onSubmit={handleConsultarProductosCategoria}>
         <input
           type="text"
-          placeholder="ID de la categoría a consultar"
+          placeholder="ID de la categoría"
           value={categoriaIdConsulta}
           onChange={(e) => setCategoriaIdConsulta(e.target.value)}
         />
@@ -113,7 +116,7 @@ const Categorias = () => {
             </li>
           ))
         ) : (
-          <li>No hay productos disponibles para esta categoría</li>
+          <li>No hay existencias disponibles en esta categoría</li>
         )}
       </ul>
     </div>
@@ -121,6 +124,7 @@ const Categorias = () => {
 };
 
 export default Categorias;
+
 
 
 

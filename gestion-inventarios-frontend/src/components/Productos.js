@@ -20,7 +20,7 @@ const Productos = () => {
         const data = await ProductoService.obtenerProductos();
         setProductos(data);
       } catch (error) {
-        console.error('Error al obtener productos:', error);
+        console.error('Error al obtener los productos:', error);
       }
     };
 
@@ -29,7 +29,7 @@ const Productos = () => {
         const data = await CategoriaService.obtenerCategorias();
         setCategorias(data);
       } catch (error) {
-        console.error('Error al obtener categorías:', error);
+        console.error('Error al obtener las categorías:', error);
       }
     };
 
@@ -41,9 +41,9 @@ const Productos = () => {
     try {
       await ProductoService.eliminarProducto(id);
       setProductos(productos.filter((producto) => producto.id !== id));
-      console.log('Producto eliminado con éxito');
+      console.log('Producto eliminado exitosamente');
     } catch (error) {
-      console.error('Error al eliminar producto:', error);
+      console.error('Error al eliminar el producto:', error);
     }
   };
 
@@ -59,7 +59,7 @@ const Productos = () => {
         setCategoriaId(producto.categoria.id.toString());
       }
     } catch (error) {
-      console.error('Error al obtener producto para actualizar:', error);
+      console.error('Error al obtener el producto para actualizar:', error);
     }
   };
 
@@ -68,7 +68,7 @@ const Productos = () => {
       const stock = await ProductoService.consultarStockDisponible(id);
       alert(`Stock disponible para el producto ID ${id}: ${stock}`);
     } catch (error) {
-      console.error('Error al consultar stock:', error);
+      console.error('Error al consultar el stock:', error);
     }
   };
 
@@ -86,9 +86,9 @@ const Productos = () => {
       setPrecio(0);
       setCantidad(0);
       setCategoriaId('');
-      setMostrarFormulario(false); // Ocultar formulario después de agregar producto
+      setMostrarFormulario(false);
     } catch (error) {
-      console.error('Error al agregar producto:', error);
+      console.error('Error al agregar el producto:', error);
       setMensaje('Error al agregar producto');
     }
   };
@@ -111,7 +111,7 @@ const Productos = () => {
   return (
     <div>
       <h1>Productos</h1>
-      {mensaje && <div style={{ color: 'green' }}>{mensaje}</div>}
+      {mensaje && <div className="mensaje">{mensaje}</div>}
       <button onClick={() => setMostrarFormulario(!mostrarFormulario)}>
         {mostrarFormulario ? 'Ocultar Formulario' : 'Agregar Producto'}
       </button>
@@ -137,9 +137,11 @@ const Productos = () => {
           productos.map((producto) => (
             <li key={producto.id}>
               {producto.nombre} - {producto.descripcion} - Precio: {producto.precio} - Cantidad: {producto.cantidad}
-              <button onClick={() => handleEliminarProducto(producto.id)}>Eliminar</button>
-              <button onClick={() => handleActualizarProducto(producto.id)}>Actualizar</button>
-              <button onClick={() => handleConsultarStock(producto.id)}>Consultar Stock</button>
+              <div className="actions">
+                <button className="btn-blue" onClick={() => handleConsultarStock(producto.id)}>Consultar Stock</button>
+                <button className="btn-blue" onClick={() => handleActualizarProducto(producto.id)}>Actualizar</button>
+                <button onClick={() => handleEliminarProducto(producto.id)}>Eliminar</button>
+              </div>
             </li>
           ))
         ) : (
@@ -168,6 +170,7 @@ const Productos = () => {
 };
 
 export default Productos;
+
 
 
 
