@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseUrl = 'http://localhost:8080'; // Asegúrate de que esta URL sea correcta
+const baseUrl = 'http://localhost:8080';
 
 const ProductoService = {
   obtenerProductos: async () => {
@@ -74,5 +74,3 @@ const ProductoService = {
 };
 
 export default ProductoService;
-
-

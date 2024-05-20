@@ -12,7 +12,9 @@ const Productos = () => {
   const [productoId, setProductoId] = useState(null);
   const [mensaje, setMensaje] = useState('');
   const [categorias, setCategorias] = useState([]);
-  const [mostrarFormulario, setMostrarFormulario] = useState(false); // Nuevo estado para mostrar/ocultar formulario
+  const [mostrarFormulario, setMostrarFormulario] = useState(false);
+  const [producto, setProducto] = useState(null);
+  const [idProducto, setIdProducto] = useState('');
 
   useEffect(() => {
     const obtenerProductos = async () => {
@@ -20,7 +22,7 @@ const Productos = () => {
         const data = await ProductoService.obtenerProductos();
         setProductos(data);
       } catch (error) {
-        console.error('Error al obtener productos:', error);
+        console.error('Error al obtener los productos:', error);
       }
     };
 
@@ -29,7 +31,7 @@ const Productos = () => {
         const data = await CategoriaService.obtenerCategorias();
         setCategorias(data);
       } catch (error) {
-        console.error('Error al obtener categorías:', error);
+        console.error('Error al obtener las categorías:', error);
       }
     };
 
@@ -41,9 +43,9 @@ const Productos = () => {
     try {
       await ProductoService.eliminarProducto(id);
       setProductos(productos.filter((producto) => producto.id !== id));
-      console.log('Producto eliminado con éxito');
+      console.log('Producto eliminado exitosamente');
     } catch (error) {
-      console.error('Error al eliminar producto:', error);
+      console.error('Error al eliminar el producto:', error);
     }
   };
 
@@ -56,10 +58,10 @@ const Productos = () => {
         setDescripcion(producto.descripcion);
         setPrecio(producto.precio);
         setCantidad(producto.cantidad);
-        setCategoriaId(producto.categoria.id.toString()); // Convertir ID a cadena para el campo select
+        setCategoriaId(producto.categoria.id.toString());
       }
     } catch (error) {
-      console.error('Error al obtener producto para actualizar:', error);
+      console.error('Error al obtener el producto para actualizar:', error);
     }
   };
 
@@ -68,7 +70,7 @@ const Productos = () => {
       const stock = await ProductoService.consultarStockDisponible(id);
       alert(`Stock disponible para el producto ID ${id}: ${stock}`);
     } catch (error) {
-      console.error('Error al consultar stock:', error);
+      console.error('Error al consultar el stock:', error);
     }
   };
 
@@ -86,9 +88,9 @@ const Productos = () => {
       setPrecio(0);
       setCantidad(0);
       setCategoriaId('');
-      setMostrarFormulario(false); // Ocultar formulario después de agregar producto
+      setMostrarFormulario(false);
     } catch (error) {
-      console.error('Error al agregar producto:', error);
+      console.error('Error al agregar el producto:', error);
       setMensaje('Error al agregar producto');
     }
   };
@@ -108,10 +110,20 @@ const Productos = () => {
     }
   };
 
+const handleConsultarProducto = async () => {
+  try {
+    const productoObtenido = await ProductoService.obtenerProductoPorId(idProducto);
+    setProducto(productoObtenido);
+    setIdProducto('');
+  } catch (error) {
+    console.error('Error al consultar el producto:', error);
+  }
+};
+
   return (
     <div>
       <h1>Productos</h1>
-      {mensaje && <div style={{ color: 'green' }}>{mensaje}</div>}
+      {mensaje && <div className="mensaje">{mensaje}</div>}
       <button onClick={() => setMostrarFormulario(!mostrarFormulario)}>
         {mostrarFormulario ? 'Ocultar Formulario' : 'Agregar Producto'}
       </button>
@@ -132,14 +144,40 @@ const Productos = () => {
           <button type="submit">Agregar</button>
         </form>
       )}
+    <div>
+      <input
+        type="text"
+        value={idProducto}
+        onChange={(e) => setIdProducto(e.target.value)}
+        placeholder="Ingrese ID del producto"
+      />
+      <button onClick={handleConsultarProducto}>
+        Consultar Producto
+      </button>
+        {producto && (
+          <div>
+            <h2>Producto</h2>
+            <p>ID: {producto.id}</p>
+            <p>Nombre: {producto.nombre}</p>
+            <p>Descripción: {producto.descripcion}</p>
+            <p>Precio: {producto.precio}</p>
+            <p>Cantidad disponible: {producto.cantidad}</p>
+            <p>Categoría: {producto.categoria.nombre}</p>
+          </div>
+        )}
+    </div>
       <ul>
         {productos.length > 0 ? (
           productos.map((producto) => (
             <li key={producto.id}>
-              {producto.nombre} - {producto.descripcion} - Precio: {producto.precio} - Cantidad: {producto.cantidad}
-              <button onClick={() => handleEliminarProducto(producto.id)}>Eliminar</button>
-              <button onClick={() => handleActualizarProducto(producto.id)}>Actualizar</button>
-              <button onClick={() => handleConsultarStock(producto.id)}>Consultar Stock</button>
+              <strong>ID:</strong> {producto.id}<br />
+              <strong>Nombre:</strong> {producto.nombre}<br />
+              <strong>Descripción:</strong> {producto.descripcion}<br />
+              <strong>Precio:</strong> {producto.precio}<br />
+              <strong>Cantidad disponible:</strong> {producto.cantidad}<br />
+              <button className="btn-oscuro" onClick={() => handleActualizarProducto(producto.id)}>Actualizar</button>
+              <button className="btn-oscuro" onClick={() => handleConsultarStock(producto.id)}>Consultar Stock</button>
+              <button className="btn-eliminar" onClick={() => handleEliminarProducto(producto.id)}>Eliminar</button>
             </li>
           ))
         ) : (
@@ -168,6 +206,4 @@ const Productos = () => {
 };
 
 export default Productos;
-
-
 
