@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 
-
-
 import java.util.List;
 
 @RestController
@@ -29,5 +27,11 @@ public class CategoriaControlador {
     public ResponseEntity<CategoriaDTO> agregarCategoria(@RequestBody CategoriaDTO categoriaDTO) {
         CategoriaDTO nuevaCategoria = servicioCategoria.agregarCategoria(categoriaDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevaCategoria);
+    }
+
+    @DeleteMapping("/eliminar/{id}")
+    public ResponseEntity<String> eliminarCategoria(@PathVariable Long id) {
+        servicioCategoria.eliminarCategoria(id);
+        return ResponseEntity.ok("Categoría eliminada correctamente");
     }
 }
