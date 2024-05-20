@@ -8,6 +8,8 @@ jobs:
     steps:
       - name: Descargando el Proyecto
         uses: actions/checkout@v4
+        with:
+          fetch-depth: '0'
       - name: Instalacion de Java
         uses: actions/setup-java@v4
         with:
@@ -19,21 +21,36 @@ jobs:
         run: chmod +x ./gradlew
       - name: Compila el Proyecto build Proyect
         run: ./gradlew build
-      - name: Docker metadata
-        uses: docker/metadata-action@v2
-        with:
-          images: estebanbeco27/gestion_inventarios
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
       - name: Log In al DockerHub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+         username: ${{ secrets.DOCKER_USERNAME }}
+         password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Calculate Next Semantic Version Tag
+        id: next_tag
+        run: |
+          GIT_TAG=$(git describe --tags --abbrev=0 --match "[0-9]*.[0-9]*.[0-9]*" `git rev-list --tags --max-count=1` 2>/dev/null) || echo "1.0.0"
+          
+          echo "Latest tag: $GIT_TAG"
+          
+          NEXT_TAG=$(echo $GIT_TAG | awk -F. -v OFS=. '{$NF++; print $1,$2,$3}')
+          if ! [[ $NEXT_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            NEXT_TAG="1.0.1"
+          fi
+          echo "Next tag: $NEXT_TAG"
+          echo "next_version=$NEXT_TAG" >> $GITHUB_ENV
+          echo "::set-output name=next_version::$NEXT_TAG"
+      - name: Docker metadata
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: estebanbeco27/gestion_inventarios
+          tags: |
+            type=raw,value=${{ steps.next_tag.outputs.next_version }}
+
       - name: Construye y sube la imagen de docker
         uses: docker/build-push-action@v2
         with:
-          images: estebanbeco27/gestion_inventarios
           context: .
           file: Dockerfile
           push: true
