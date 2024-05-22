@@ -1,0 +1,37 @@
+name: CI for API Frontend
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Revisa el Codigo
+        uses: actions/checkout@v2
+
+      - name: Configura el Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Instalacion de las dependencias npm
+        run: npm install
+
+
+      - name: Corre linter
+        run: npm run lint
+
+
+      - name: Corre  los test
+        run: npm test -- --ci --watchAll=false
+
+
+      - name: Compila front end
+        run: npm run build
